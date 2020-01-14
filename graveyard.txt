@@ -1,0 +1,55 @@
+client.on('message', message => {
+	console.log(message.content);
+
+	
+
+
+
+	//Kick
+	if(message.member.hasPermission(['KICK_MEMBERS'])) {
+		if(message.content.startsWith(`${prefix}kick`)) {
+			let member = message.mentions.members.first();
+			member.kick().then((member) => {
+				message.channel.send(":wave: " + member.displayName + " has been kicked!")
+			})
+		}
+	}
+	//Ban
+	if(message.member.hasPermission(['BAN_MEMBERS'])) {
+		if(message.content.startsWith(`${prefix}ban`)) {
+			let member = message.mentions.members.first();
+			member.ban().then((member) => {
+				message.channel.send(":wave: " + member.displayName + " has been Banned!")
+			})
+		}
+	}
+
+
+});
+
+
+
+	const args = message.content.slice(prefix.length).split(/ +/);
+	const command = args.shift().toLowerCase();
+	let member = message.mentions.members.first();
+	if (!message.content.startsWith(prefix) || message.author.bot) {
+		return;
+	}
+
+	//Args Info
+	else if (command === 'args-info') {
+		if (!args.length) {
+			return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+		}
+		message.channel.send(`Command name: ${command}\nArguments: ${args}`);
+	}
+
+	//Kick
+	else if (command === 'kick') {
+		if (!message.mentions.users.size) {
+			return message.channel.send(`You need to tag a user to kick!`)
+		}
+		member.kick(args.slice(-(args.length-1)).join(" ")).then((member) => {
+			message.channel.send(":wave: " + member.displayName + " has been kicked!")
+		})
+	}
