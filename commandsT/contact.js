@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 
-	clientT.say(target, `You can contact the moderation team, report a user, or make an appeal at ` + links.contact.substring(8));
+	clientT.say(target, `You can contact the mod team, report a user, or make an appeal at ${links.contact.substring(8)}`);
 
 	}
 

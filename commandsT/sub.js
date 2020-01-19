@@ -6,7 +6,7 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 		const axios = require('axios');
 		const config = require('../config.json');

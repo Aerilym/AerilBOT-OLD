@@ -1,39 +1,65 @@
 module.exports = {
 	name: 'timers',
 	aliases: ['timer'],
-	description: 'timers',
-	use: '!timers',
-
-	
+	description: 'timer',
+	use: '!timer',
 	//Actual Command
-	execute(target, context, msg, self) {
-
-		const permissions = require('../permission.js');
-		if (!permissions.Broadcaster(context)) { console.log("User does not have permission"); return; } //Broadcaster Permission
-		console.log("User has permission");
+	execute(target, userstate, msg, self, args) {
 		
 		const links = require('../links.json');
+		const axios = require('axios');
+		const config = require('../config.json');
+		const permissions = require('../permission.js');
+		if (!permissions.Broadcaster(userstate)) { console.log("User does not have permission"); return; } //Broadcaster Permission
+		console.log("User has permission");
 
 		//Timers to call
 function timerDiscord() {
-	clientT.commandsT.get('!discord').execute(target, context, msg, self)
+	clientT.commandsT.get('discord').execute(target, userstate, msg, self, args);
 }
-//function timerFollow() {
-//	clientT.commandsT.get('!discord').execute(target, context, msg, self)
-//}
+function timerFollow() {
+	clientT.commandsT.get('follow').execute(target, userstate, msg, self, args);
+}
 //function timerSub() {
-//	clientT.commandsT.get('!discord').execute(target, context, msg, self)
+//	clientT.commandsT.get('!discord').execute(target, userstate, msg, self, args)
 //}
 function timerTip() {
-	clientT.commandsT.get('!tip').execute(target, context, msg, self)
+	clientT.commandsT.get('tip').execute(target, userstate, msg, self, args);
+}
+function timerHost() {
+
+		const twitchgetuser = axios.create({
+			baseURL: 'https://api.twitch.tv',
+			headers: {'Client-ID': config.CLIENT_ID},
+		  });
+
+		twitchgetuser.get(`/helix/streams?user_login=aerilbot`)
+		.then((response) => {
+			console.log(response)
+			if (!response.data.data[0]) { 
+				return; 
+			}
+
+		})
 }
 
-		//Timers (ms)
+		clientT.say(`#aerilbot`, `/host aerilym_`)
 
-		setInterval(timerDiscord, 1800000)
-//		setInterval(timerFollow, 1800000)
-//		setInterval(timerSub, 3000000)
-		setInterval(timerTip, 1500000)
+		//Timers (ms)
+		intervalDiscord = setInterval(timerDiscord, 60000*25);
+		intervalFollow = setInterval(timerFollow, 60000*34);
+		//intervalSub = setInterval(timerSub, 60000);
+		intervalTip = setInterval(timerTip, 60000*58);
+		//intervalHost = setInterval(timerHost, 60000*30);
+		clearInterval(intervalDiscord);
+		clearInterval(intervalFollow);
+		clearInterval(intervalTip);
+		//clearInterval(intervalHost);
+		intervalDiscord = setInterval(timerDiscord, 60000*25);
+		intervalFollow = setInterval(timerFollow, 60000*34);
+		//intervalSub = setInterval(timerSub, 60000);
+		intervalTip = setInterval(timerTip, 60000*58);
+		//intervalHost = setInterval(timerHost, 60000*60);
 
 	}
 

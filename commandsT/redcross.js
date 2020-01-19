@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 
-	clientT.say(target, `Donate to the Australian Red Cross & help those affected by the Australian fires! ` + links.streamlabs.substring(8));
+	clientT.say(target, `Donate to the Australian Red Cross & help those affected by the Australian fires! ${links.streamlabs.substring(8)}`);
 
 	}
 

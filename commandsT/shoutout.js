@@ -6,25 +6,26 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self, args) {
+	execute(target, userstate, msg, self, args) {
 
 		const permissions = require('../permission.js');
-		if (!permissions.Mod(context)) { console.log("User does not have permission"); return; } //Mod Permission
+		if (!permissions.Mod(userstate)) { console.log("User does not have permission"); return; } //Mod Permission
 		console.log("User has permission");
 
 		const axios = require('axios');
 		const config = require('../config.json');
 
+		const soTarget = args[0].replace('@','');
 
 		const twitchgetuser = axios.create({
 			baseURL: 'https://api.twitch.tv',
 			headers: {'Client-ID': config.CLIENT_ID},
 		  });
 
-		twitchgetuser.get(`/helix/streams?user_login=${args[0].toLowerCase()}`)
+		twitchgetuser.get(`/helix/streams?user_login=${soTarget.toLowerCase()}`)
 		.then((response) => {
 			if (!response.data.data[0]) { 
-				clientT.say(target, `Go check out ${args[0]} over at https://www.twitch.tv/${args[0]}`); 
+				clientT.say(target, `Go check out ${soTarget} over at https://www.twitch.tv/${soTarget}`); 
 				return; 
 			}
 		  const soName = JSON.stringify(response.data.data[0].user_name).slice(1,-1)

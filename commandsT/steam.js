@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 
-	clientT.say(target, `Join the community Steam group & curator page! ` + links.steam.substring(8));
+	clientT.say(target, `Join the community Steam group & curator page! ${links.steam.substring(8)}`);
 
 	}
 

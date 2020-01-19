@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 
-	clientT.say(target, `Be sure to like my Facebook page for extra content! ` + links.facebook.substring(8));
+	clientT.say(target, `Like and follow the facebook page for clips! ${links.facebook.substring(8)}`);
 
 	}
 

@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, user, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
 
-	clientT.say(target, `/me CoolCat ` + user.username + ` is now lurking, thx for hanging out! CoolCat `);
+	clientT.say(target, `/me CoolCat ${userstate.username} is now lurking, thx for hanging out! CoolCat `);
 
 	}
 

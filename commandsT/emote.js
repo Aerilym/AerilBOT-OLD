@@ -1,14 +1,14 @@
 module.exports = {
 	name: 'emote',
-	aliases: ['fremotes'],
+	aliases: ['fremotes', 'bttv', 'franker', 'frankers'],
 	description: 'emote',
 	use: '!emote',
 
 	
 	//Actual Command
-	execute(target, context, msg, self) {
+	execute(target, userstate, msg, self, args) {
 
-	clientT.say(target, `Here be all the free emotes!!! KEKW Pepeg ChooChoo pepeScheme monkaW Bruh santaPog PogU peepoLove peepoRIP Pepega monkaHmm monkaTOS peepoHug PepeHands monkaW POGGERS Pog HYPERBRUH monkaH PepeREE monkaGun weSmart LULW monkaS OMEGALUL dogeKek FeelsAmazingMan TrainSkip JUSTDOIT PressF SuchMeme okiRIP PepoDance COGGERS pepeD bongoTap pepeJAMMER kekw Clap gachiHYPER OhISee `);
+	clientT.say(target, `Here be all the free emotes!!! PepoDance lewiPlz COGGERS FeelsRedditMan pepeJAM pepeD bongoTap pepeJAMMER ClapHD kekw HYPEROMEGACATBEDOINGTHELAUNDRYULTRA Clap PartyParrot gachiBASS gachiHYPER okiRIP SuchMeme PressF JUSTDOIT TrainSkip FeelsAmazingMan dogeKek OMEGALUL monkaS LULW weSmart monkaGun PepeREE monkaH HYPERBRUH Pog POGGERS monkaW OhISee PepeHands peepoHug monkaTOS monkaHmm Pepega peepoRIP peepoLove PogU santaPog Bruh pepeScheme ChooChoo Pepeg mantheSub KEKW `);
 
 	}
 

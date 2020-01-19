@@ -6,10 +6,10 @@ module.exports = {
 
 	
 	//Actual Command
-	execute(target, context, msg, self, args) {
+	execute(target, userstate, msg, self, args) {
 
 		const permissions = require('../permission.js');
-		if (!permissions.Broadcaster(context)) { console.log("User does not have permission"); return; } //Broadcaster Permission
+		if (!permissions.Broadcaster(userstate)) { console.log("User does not have permission"); return; } //Broadcaster Permission
 		console.log("User has permission");
 
 		const commandNameT = args[0].toLowerCase();
