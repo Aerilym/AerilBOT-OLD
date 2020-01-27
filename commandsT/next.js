@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'next',
-	aliases: ['tz', '!timezone'],
+	aliases: ['stream', 'nextstream', 'streams', 'schedule'],
 	description: 'next',
 	use: '!next',
 
@@ -8,46 +8,87 @@ module.exports = {
 	//Actual Command
 	execute(target, userstate, msg, self, args) {
 		const links = require('../links.json');
+		var fs = require('fs');
+		//timezones
+		var moment = require('moment-timezone');
+		moment().tz("Australia/Melbourne").format();
 
-//timezones
-var moment = require('moment-timezone');
-moment().tz("Australia/Melbourne").format();
-var jun = moment("2014-06-01T12:00:00Z");
-var dec = moment("2014-12-01T12:00:00Z");
+		delete require.cache[require.resolve(`../streamlist.json`)];
+		const streamlist = require('../streamlist.json');
 
-jun.tz('America/Los_Angeles').format('ha z');  // 5am PDT
-dec.tz('America/Los_Angeles').format('ha z');  // 4am PST
+		//checks if 1st item is in the past
+		var nowTime = new Date();
+		var nowUTC = nowTime.getTime();
+		var melbourne = moment.tz(streamlist[0].substr(0,16), "Australia/Melbourne");
+		var usertime = melbourne.clone().tz('Australia/Melbourne').format();
+		const stYear = usertime.substr(0,4);
+		const stMonth = usertime.substr(5,2)-1;
+		const stDay = usertime.substr(8,2);
+		const stHour = usertime.substr(11,2);
+		const stMinute = usertime.substr(14,2);
+		const stSecond = usertime.substr(17,2);
+		if (Date.UTC(stYear, stMonth, stDay, stHour, stMinute, stSecond)<nowUTC) {
+			for (i=0; i<1;) {
+				if (!datecheck) { var datecheck = streamlist; }
+				var melbourne = moment.tz(datecheck[0].substr(0,16), "Australia/Melbourne");
+				var usertime = melbourne.clone().tz('Australia/Melbourne').format();
 
-jun.tz('America/New_York').format('ha z');     // 8am EDT
-dec.tz('America/New_York').format('ha z');     // 7am EST
+				//time setup
+				const stYear = usertime.substr(0,4);
+				const stMonth = usertime.substr(5,2)-1;
+				const stDay = usertime.substr(8,2);
+				const stHour = usertime.substr(11,2);
+				const stMinute = usertime.substr(14,2);
+				const stSecond = usertime.substr(17,2);
 
-jun.tz('Europe/London').format('ha z');           // 9pm JST
-dec.tz('Europe/London').format('ha z');           // 9pm JST
+				if (Date.UTC(stYear, stMonth, stDay, stHour, stMinute, stSecond)<nowUTC) {
+					datecheck.shift();
+				} else {
+					fs.writeFile('./streamlist.json', JSON.stringify(datecheck, null, 4), 'utf8', (err) => {
+						if (err) throw err;
+							clientT.commandsT.get('next').execute(target, userstate, msg, self, args);
+					})
+					i++;
+					return;
+				}
+			}
+		}
 
-jun.tz('Australia/Melbourne').format('ha z');     // 10pm EST
-dec.tz('Australia/Melbourne').format('ha z');     // 11pm EST
+		//melb if no tz selection
+		if (!args[0]) { 
+			 var usertz = 'Australia/Melbourne';
+		} else {
+			var usertz = args.join(' '); 
+		}
 
-var melbourne    = moment.tz("2014-06-01 12:00", "Australia/Melbourne");
-var losAngeles = melbourne.clone().tz("America/Los_Angeles");
-var newYork     = melbourne.clone().tz("America/New_York");
-var london     = melbourne.clone().tz("Europe/London");
+		//aborts if invalid tz
+		if (!moment.tz.zone(usertz)) { clientT.say(target, `Sorry I can't find that zone, it needs to be like: America/Los_Angeles`); return; }
 
-melbourne.format();    // 2014-06-01T12:00:00-04:00
-newYork.format();    // 2014-06-01T12:00:00-04:00
-losAngeles.format(); // 2014-06-01T09:00:00-07:00
-london.format();     // 2014-06-01T17:00:00+01:00
+		var timeformatted = ["", "", "", "", ""];
+		var stringstream = ["", "", "", "", ""];
 
-console.log(melbourne.format());
-console.log(losAngeles.format());
-console.log(newYork.format());
-console.log(london.format());
-console.log(target);
-console.log(context);
-console.log(msg);
-console.log(self);
+		if (streamlist.length > 5) { var lengthshow = 5; } else { var lengthshow = streamlist.length; }
 
-	clientT.say(target, `Join the community Discord! ` + links.discord.substring(8));
+		for (n=0; n < lengthshow; n++ ) {
+			var melbourne = moment.tz(streamlist[n].substr(0,16), "Australia/Melbourne");
+			var usertime = melbourne.clone().tz(usertz).format();
 
+			//time setup
+			const stYear = usertime.substr(0,4);
+			const stMonth = usertime.substr(5,2)-1;
+			const stDay = usertime.substr(8,2);
+			const stHour = usertime.substr(11,2);
+			const stMinute = usertime.substr(14,2);
+			const stSecond = usertime.substr(17,2);
+			const tzstring = usertime.substr(19,6);
+
+			const dateowo = new Date(Date.UTC(stYear, stMonth, stDay, stHour, stMinute, stSecond));
+
+			timeformatted[n] = `${stHour}:${stMinute} ${dateowo.toUTCString().substr(0,11)}`;
+			stringstream[n] = `PurpleStar ${timeformatted[n]} - ${streamlist[n].substring(16)}`;
+		
+		}
+		clientT.say(target, `For the ${usertz} timezone the next 5 streams are: ${stringstream.join(` `)}`);
 	}
 
 }

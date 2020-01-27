@@ -1,0 +1,24 @@
+{
+    "badge-info": null,
+    "badges": {
+        "moderator": "1",
+        "premium": "1"
+    },
+    "color": "#B36FDE",
+    "display-name": "AerilBOT",
+    "emotes": null,
+    "flags": null,
+    "id": "8be8c806-1c9b-419f-8090-6622240e52a1",
+    "mod": true,
+    "room-id": "107455709",
+    "subscriber": false,
+    "tmi-sent-ts": "1579434861495",
+    "turbo": false,
+    "user-id": "482173203",
+    "user-type": "mod",
+    "emotes-raw": null,
+    "badge-info-raw": null,
+    "badges-raw": "moderator/1,premium/1",
+    "username": "aerilbot",
+    "message-type": "chat"
+}

@@ -13,7 +13,7 @@ module.exports = {
 		const config = require('../config.json');
 		var fs = require('fs');
 		if (!userstate['display-name']) { listname = userstate.username; } else { listname = userstate['display-name']; }
-		if (!userstate.subscriber) { substate = (``); } else { substate = (` Sub`) }
+		if (!userstate.subscriber) { substate = (``); } else { substate = (` | Sub`) }
 
 		if (!args[0]) {
 			delete require.cache[require.resolve('../names.json')];

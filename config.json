@@ -8,5 +8,6 @@
 	"CLIENT_ID": "y8rmbmhsv1plkbw4y703c8w9llc85n",
 	"CLIENT_SECRET": "jh36bwc5guijux5jtpvw0m1eomn9u0",
 	"T_CODE": "qqwcetwnjt2jeqjh9922nwuqowpgh9",
-	"AERILYM_ID": "107455709"
+	"AERILYM_ID": "107455709",
+	"OAUTH_TOKEN_AERILYM": "oauth:w0yejh66mq8o0yhlvm91cv3zje3prt"
 }
